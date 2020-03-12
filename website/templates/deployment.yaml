@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.deploymentname }}
+  namespace: "{{ .Values.deployment.namespace }}"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.deploymentname }}
+    spec:
+      containers:
+      - name: website-deployment
+        image: {{ .Values.image.repository }}/personal_website:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 80
+          protocol: TCP
+          name: websiteport80

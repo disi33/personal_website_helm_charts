@@ -1,0 +1,6 @@
+image:
+  repository: https://index.docker.io/v1/disi33
+deployment:
+  namespace: website
+  servicename: website-appsvc
+  deploymentname: website-app
