@@ -9,6 +9,7 @@ pushd /tmp/helm_charts/$HELM_CHART/
 sed -i 's/tag: .*/tag: $VERSION_NUMBER/g' /tmp/helm_charts/$HELM_CHART/values-imgtag.yaml
 sed -i 's/version: .*/version: $VERSION_NUMBER/g' /tmp/helm_charts/$HELM_CHART/Chart.yaml
 git add /tmp/helm_charts/$HELM_CHART/values-imgtag.yaml
+git add /tmp/helm_charts/$HELM_CHART/Chart.yaml
 git commit -m "[auto] bump $HELM_CHART chart version number to $VERSION_NUMBER"
 git push origin master
 popd
