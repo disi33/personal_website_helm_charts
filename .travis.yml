@@ -19,4 +19,13 @@ after_success:
 - docker push disi33/personal_website:$VERSION_NUMBER
 - docker push disi33/personal_website:latest
 - chmod +x ./ci_scripts/update_helm_chart.sh
-- ./ci_scripts/update_helm_chart.sh $VERSION_NUMBER
+- export HELM_CHART="website"
+- git clone https://github.com/disi33/personal_website_helm_charts /tmp/helm_charts
+- pushd /tmp/helm_charts/$HELM_CHART/
+- sed -i 's/tag: .*/tag: VERSION_NUMBER/g' /tmp/helm_charts/$HELM_CHART/values-imgtag.yaml
+- sed -i 's/version: .*/version: $VERSION_NUMBER/g' /tmp/helm_charts/$HELM_CHART/Chart.yaml
+- git add /tmp/helm_charts/$HELM_CHART/values-imgtag.yaml
+- git add /tmp/helm_charts/$HELM_CHART/Chart.yaml
+- git commit -m "[auto] bump $HELM_CHART chart version number to $VERSION_NUMBER"
+- git push origin master
+- popd
