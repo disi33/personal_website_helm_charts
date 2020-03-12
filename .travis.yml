@@ -11,7 +11,7 @@ services:
 
 script:
 - dotnet build
-- export VERSION_NUMBER=$(./ci_scripts/semver.sh)
+- export VERSION_NUMBER=$(cat ./ci_scripts/semver.sh | bash)
 - docker build -t disi33/personal_website:$VERSION_NUMBER .
 - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
