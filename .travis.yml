@@ -18,3 +18,4 @@ script:
 after_success:
 - docker push disi33/personal_website:$VERSION_NUMBER
 - docker push disi33/personal_website:latest
+- cat ./ci_scripts/update_helm_chart.sh | bash
