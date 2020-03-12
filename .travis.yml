@@ -11,10 +11,10 @@ services:
 
 script:
 - dotnet build
-- docker build -t disi33/personal_website:$TRAVIS_BUILD_ID .
+- export VERSION_NUMBER=$(curl https://gist.githubusercontent.com/lxhunter/9d4310462b6972a3f57b5f914543fd51/raw/semver.sh | bash)
+- docker build -t disi33/personal_website:$VERSION_NUMBER .
 - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 after_success:
-- export VERSION_NUMBER=$(curl https://gist.githubusercontent.com/lxhunter/9d4310462b6972a3f57b5f914543fd51/raw/semver.sh | bash)
 - docker push disi33/personal_website:$VERSION_NUMBER
 - docker push disi33/personal_website:latest
