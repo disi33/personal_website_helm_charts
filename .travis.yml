@@ -12,4 +12,5 @@ services:
 script:
  - dotnet build
  - docker build -t disi33/personal_website:$TRAVIS_BUILD_ID .
+ - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
  - docker push disi33/personal_website:$TRAVIS_BUILD_ID
