@@ -1,0 +1,14 @@
+language: csharp
+mono: none
+dotnet: 3.1.0
+
+install:
+- dotnet restore
+
+services:
+- docker
+
+script:
+ - dotnet build
+ - docker build -t disi33/personal_website:$TRAVIS_BUILD_ID .
+ - docker push disi33/personal_website:$TRAVIS_BUILD_ID
