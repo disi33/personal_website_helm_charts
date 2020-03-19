@@ -21,4 +21,4 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-          name: werewolfport8080
+          name: werewolf8080

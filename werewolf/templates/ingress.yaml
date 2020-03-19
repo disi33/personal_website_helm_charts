@@ -15,4 +15,5 @@ spec:
           - path: /werewolf/?(.*)
             backend:
               serviceName: {{ .Values.deployment.servicename }}
+              servicePort: 8080
       host: "diesenreiter.com"
