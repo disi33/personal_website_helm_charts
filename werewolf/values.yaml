@@ -1,0 +1,6 @@
+image:
+  repository: disi33
+deployment:
+  namespace: werewolf
+  servicename: werewolf-appsvc
+  deploymentname: werewolf
