@@ -11,6 +11,8 @@ netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=80 conne
 #netsh interface portproxy add v4tov4 listenport=8443 connectaddress=127.0.0.1 connectport=8443 listenaddress=diesenreiter.com protocol=tcp
 #netsh interface portproxy add v4tov4 listenport=80 connectaddress=127.0.0.1 connectport=80 listenaddress=diesenreiter.com protocol=tcp
 
+git checkout master
+git pull origin master --rebase
 
 foreach($chart in $helmCharts)
 {
