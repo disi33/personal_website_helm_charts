@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.deploymentname }}
+  namespace: "{{ .Values.deployment.namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.deployment.deploymentname }}
+      namespace: "{{ .Values.deployment.namespace }}"
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.deploymentname }}
+        namespace: "{{ .Values.deployment.namespace }}"
+    spec:
+      containers:
+      - name: theorem-deployment
+        image: {{ .Values.image.repository }}/theorembot:{{ .Values.image.tag }}

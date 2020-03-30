@@ -1,0 +1,6 @@
+image:
+  repository: disi33
+deployment:
+  namespace: theorem
+  servicename: theorem-svc
+  deploymentname: theorem-bot

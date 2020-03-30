@@ -4,4 +4,4 @@ metadata:
   name: "{{ .Values.deployment.namespace }}"
   labels:
     app.kubernetes.io/name: "{{ .Values.deployment.namespace }}"
-    app.kubernetes.io/part-of: werewolf
+    app.kubernetes.io/part-of: "{{ .Values.deployment.namespace }}"
