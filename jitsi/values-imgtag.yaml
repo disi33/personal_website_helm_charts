@@ -1,0 +1,11 @@
+jicofo:
+  imagetag: latest
+
+jvb:
+  imagetag: latest
+
+prosody:
+  imagetag: latest
+
+web:
+  imagetag: latest

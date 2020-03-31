@@ -8,7 +8,9 @@ $extraCharts = @("helm")
 . helm repo update
 netsh interface portproxy add v4tov4 listenaddress=192.168.1.118 listenport=8443 connectaddress=192.168.1.123 connectport=8443
 netsh interface portproxy add v4tov4 listenaddress=192.168.1.118 listenport=80 connectaddress=192.168.1.123 connectport=80
+netsh interface portproxy add v4tov4 listenaddress=192.168.1.118 listenport=443 connectaddress=192.168.1.123 connectport=443
 netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=80 connectaddress=192.168.1.123 connectport=80
+netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=443 connectaddress=192.168.1.123 connectport=443
 netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=8443 connectaddress=192.168.1.123 connectport=8443
 #netsh interface portproxy add v4tov4 listenaddress=diesenreiter.com listenport=80 connectaddress=192.168.1.123 connectport=80
 #netsh interface portproxy add v4tov4 listenaddress=diesenreiter.com listenport=8443 connectaddress=192.168.1.123 connectport=8443
@@ -17,6 +19,8 @@ netsh interface portproxy add v4tov4 listenaddress=127.0.0.1 listenport=8443 con
 
 git checkout master
 git pull origin master --rebase
+
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.1/cert-manager.yaml
 
 foreach($chart in $helmCharts)
 {

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jitsi
+    stack: jicofo
+  name: jicofo
+  namespace: "{{ .Values.namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: jitsi
+      stack: jicofo
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jitsi
+        stack: jicofo
+    spec:
+      containers:
+      - env:
+        - name: XMPP_SERVER
+          value: "prosody-svc.{{ .Values.namespace }}"
+        - name: XMPP_DOMAIN
+          value: "{{ .Values.namespace }}"
+        - name: XMPP_AUTH_DOMAIN
+          value: "auth.{{ .Values.namespace }}"
+        - name: JICOFO_COMPONENT_SECRET
+          value: "{{ .Values.jicofo.componentSecret }}"
+        - name: JICOFO_AUTH_USER
+          value: "{{ .Values.jicofo.authUser }}"
+        - name: JICOFO_AUTH_PASSWORD
+          value: "{{ .Values.jicofo.authPassword }}"
+        - name: JVB_BREWERY_MUC
+          value: jvbbrewery
+        - name: XMPP_INTERNAL_MUC_DOMAIN
+          value: "internal-muc.{{ .Values.namespace }}"
+        - name: TZ
+          value: "{{ .Values.timezone }}"
+        image: "{{ .Values.jicofo.image }}:{{ .Values.jicofo.imagetag }}"
+        imagePullPolicy: "{{ .Values.jicofo.imagePullPolicy }}"
+        name: jicofo
+        resources: {}
+      restartPolicy: Always
+status: {}

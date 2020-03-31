@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jitsi
+    stack: prosody
+  name: prosody
+  namespace: "{{ .Values.namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: jitsi
+      stack: prosody
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jitsi
+        stack: prosody
+    spec:
+      containers:
+      - env:
+        - name: XMPP_DOMAIN
+          value: "{{ .Values.namespace }}"
+        - name: XMPP_AUTH_DOMAIN
+          value: "auth.{{ .Values.namespace }}"
+        - name: XMPP_MUC_DOMAIN
+          value: "muc.{{ .Values.namespace }}"
+        - name: JICOFO_COMPONENT_SECRET
+          value: "{{ .Values.jicofo.componentSecret }}"
+        - name: JVB_COMPONENT_SECRET
+          value: "{{ .Values.jvb.componentSecret }}"
+        - name: JICOFO_AUTH_USER
+          value: "{{ .Values.jicofo.authUser }}"
+        - name: JICOFO_AUTH_PASSWORD
+          value: "{{ .Values.jicofo.authPassword }}"
+        - name: JVB_AUTH_USER
+          value: "{{ .Values.jvb.authUser }}"
+        - name: JVB_AUTH_PASSWORD
+          value: "{{ .Values.jvb.authPassword }}"
+        - name: XMPP_INTERNAL_MUC_DOMAIN
+          value: "internal-muc.{{ .Values.namespace }}"
+        - name: TZ
+          value: "{{ .Values.timezone }}"
+        image: "{{ .Values.prosody.image }}:{{ .Values.prosody.imagetag }}"
+        imagePullPolicy: "{{ .Values.prosody.imagePullPolicy }}"
+        name: prosody
+        ports:
+        - containerPort: 5222
+        - containerPort: 5280
+        - containerPort: 5347
+        resources: {}
+      restartPolicy: Always
+status: {}

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: jitsi
+    stack: web
+  name: web
+  namespace: "{{ .Values.namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: jitsi
+      stack: web
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jitsi
+        stack: web
+    spec:
+      containers:
+      - env:
+        - name: JICOFO_AUTH_USER
+          value: "{{ .Values.jicofo.authUser }}"
+        - name: XMPP_DOMAIN
+          value: "{{ .Values.namespace }}"
+        - name: XMPP_AUTH_DOMAIN
+          value: "auth.{{ .Values.namespace }}"
+        - name: XMPP_BOSH_URL_BASE
+          value: "http://prosody-svc.{{ .Values.namespace }}:5280"
+        - name: XMPP_MUC_DOMAIN
+          value: "muc.{{ .Values.namespace }}"
+        - name: TZ
+          value: "{{ .Values.timezone }}"
+        image: "{{ .Values.web.image }}:{{ .Values.web.imagetag }}"
+        imagePullPolicy: "{{ .Values.web.imagePullPolicy }}"
+        name: web
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources: {}
+status: {}
