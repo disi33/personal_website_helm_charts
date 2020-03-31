@@ -18,7 +18,8 @@ ingress:
   enabled: true
   annotations: {
       "cert-manager.io/cluster-issuer": "letsencrypt",
-      "kubernetes.io/tls-acme": "true"
+      "kubernetes.io/tls-acme": "true",
+      "nginx.ingress.kubernete.io/backend-protocol": "HTTPS"
       }
   paths: ["/"]
   hosts:
