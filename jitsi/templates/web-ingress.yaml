@@ -28,6 +28,6 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: web
-              servicePort: https
+              servicePort: http
         {{- end }}
   {{- end }}

@@ -24,6 +24,8 @@ spec:
       - env:
         - name: XMPP_SERVER
           value: "prosody-svc.{{ .Values.namespace }}"
+        - name: JVB_TCP_HARVESTER_DISABLED
+          value: "true"
         - name: XMPP_DOMAIN
           value: "{{ .Values.namespace }}"
         - name: XMPP_AUTH_DOMAIN

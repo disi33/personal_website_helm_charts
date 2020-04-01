@@ -23,7 +23,15 @@ spec:
       containers:
       - env:
         - name: XMPP_SERVER
-          value: "prosody.{{ .Values.namespace }}"
+          value: "prosody-svc.{{ .Values.namespace }}"
+        - name: NAT_HARVESTER_PUBLIC_ADDRESS
+          value: "jitsi.diesenreiter.com"
+        - name: NAT_HARVESTER_LOCAL_ADDRESS
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        # - name: JVB_TCP_HARVESTER_DISABLED
+        #   value: "true"
         - name: DOCKER_HOST_ADDRESS
           valueFrom:
             fieldRef:
