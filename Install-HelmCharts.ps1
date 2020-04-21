@@ -5,6 +5,7 @@ $helmCharts = $directoryNames | Where-Object -Property Name -NotLike ".*"
 $extraCharts = @("helm")
 
 . helm repo add stable https://kubernetes-charts.storage.googleapis.com
+. helm repo add multi-juicer https://iteratec.github.io/multi-juicer/
 . helm repo update
 
 if (!$IsLinux)

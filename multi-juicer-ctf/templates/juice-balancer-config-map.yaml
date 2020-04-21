@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: juice-balancer-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    helm.sh/chart: {{ include "multi-juicer.chart" . }}
+data:
+  config.json: |
+    {
+      "port": 3000,
+      "basePath": "/juicectf",
+      "namespace": {{ .Release.Namespace | quote }},
+      "deploymentContext": {{ .Release.Name | quote }},
+      "maxJuiceShopInstances": {{ .Values.juiceShop.maxInstances}},
+      "cookieParser": {
+        "cookieName": {{ include "multi-juicer.cookieName" . | quote }},
+        "secure": {{ .Values.balancer.cookie.secure }}
+      },
+      "admin": {
+        "username": "admin"
+      },
+  {{- if .Values.balancer.metrics.enabled }}
+      "metrics": {
+        "enabled": true
+      },
+  {{- end }}
+      "juiceShop": {
+        "image": {{ .Values.juiceShop.image | quote }},
+        "tag": {{ .Values.juiceShop.tag | quote }},
+        "imagePullPolicy": {{ .Values.imagePullPolicy | quote }},
+        "ctfKey": {{ .Values.juiceShop.ctfKey | quote }},
+        "nodeEnv": {{ .Values.juiceShop.nodeEnv | quote }},
+        "resources": {{ .Values.juiceShop.resources | toJson }}
+      }
+    }

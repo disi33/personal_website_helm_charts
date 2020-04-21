@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: juice-balancer-ui-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    helm.sh/chart: {{ include "multi-juicer.chart" . }}
+data:
+  config.json: |
+    {
+      "basePath": "/juicectf"
+    }

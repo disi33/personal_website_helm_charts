@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: juiceedu
+  labels:
+    app.kubernetes.io/name: juiceedu
+    app.kubernetes.io/part-of: juiceedu

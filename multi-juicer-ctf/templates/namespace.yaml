@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: juicectf
+  labels:
+    app.kubernetes.io/name: juicectf
+    app.kubernetes.io/part-of: juicectf

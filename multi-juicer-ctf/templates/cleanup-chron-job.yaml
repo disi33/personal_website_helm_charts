@@ -1,0 +1,42 @@
+{{- if .Values.juiceShopCleanup.enabled -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: 'cleanup-job'
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: {{ .Values.juiceShopCleanup.cron }}
+  successfulJobsHistoryLimit: {{ .Values.juiceShopCleanup.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.juiceShopCleanup.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: 'cleanup-job'
+            helm.sh/chart: {{ include "multi-juicer.chart" . }}
+        spec:
+          serviceAccountName: 'juice-cleaner'
+          containers:
+            - image: '{{ .Values.juiceShopCleanup.repository }}:{{ .Values.juiceShopCleanup.tag }}'
+              imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+              name: 'cleanup-job'
+              env:
+                - name: NAMESPACE
+                  value: {{ .Release.Namespace | quote }}
+                - name: MAX_INACTIVE_DURATION
+                  value: {{ .Values.juiceShopCleanup.gracePeriod }}
+          restartPolicy: Never
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.juiceShopCleanup.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.juiceShopCleanup.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
